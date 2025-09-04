@@ -215,6 +215,9 @@
                                 <format>HTML</format>
                             </formats>
                             <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+                            <excludes>
+                                <exclude>com/bank/client_service/exception/*</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                     <execution>
