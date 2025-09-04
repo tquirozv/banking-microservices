@@ -92,10 +92,10 @@ INSERT INTO clientes (persona_id, contrasena, estado) VALUES
 ('11223344', '90123', true);
 
 INSERT INTO cuentas (numero_cuenta, tipo_cuenta, saldo_inicial, saldo_actual, cliente_id) VALUES 
-('478758', 'AHORRO', 2000.00, 2000.00, 1),
-('225487', 'CORRIENTE', 100.00, 100.00, 2),
-('495878', 'AHORRO', 0.00, 0.00, 3),
-('496825', 'AHORRO', 540.00, 540.00, 2),
+('478758', 'AHORRO', 2000.00, 1425.00, 1),
+('225487', 'CORRIENTE', 100.00, 600.00, 2),
+('495878', 'AHORRO', 0.00, 150.00, 3),
+('496825', 'AHORRO', 540.00, 0.00, 2),
 ('585545', 'CORRIENTE', 1000.00, 1000.00, 1),
 ('001-000001', 'AHORRO', 1000.00, 1000.00, 4),
 ('001-000002', 'CORRIENTE', 500.00, 500.00, 5),

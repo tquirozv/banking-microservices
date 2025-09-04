@@ -116,29 +116,29 @@ class AccountServiceImplTest {
     @Test
     void whenGetAccountById_thenReturnAccount() {
         // Given
-        when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
+        when(accountRepository.findByNumeroCuenta("1L")).thenReturn(Optional.of(account));
 
         // When
-        AccountResponseDto result = accountService.getAccountById(1L);
+        AccountResponseDto result = accountService.getAccountByNumber("1L");
 
         // Then
         assertThat(result).isNotNull();
         assertThat(result.getNumeroCuenta()).isEqualTo("123456");
 
-        verify(accountRepository).findById(1L);
+        verify(accountRepository).findByNumeroCuenta("1L");
     }
 
     @Test
     void whenGetAccountByIdNotFound_thenThrowException() {
         // Given
-        when(accountRepository.findById(999L)).thenReturn(Optional.empty());
+        when(accountRepository.findByNumeroCuenta("999L")).thenReturn(Optional.empty());
 
         // When & Then
-        assertThatThrownBy(() -> accountService.getAccountById(999L))
+        assertThatThrownBy(() -> accountService.getAccountByNumber("999L"))
                 .isInstanceOf(AccountNotFoundException.class)
-                .hasMessageContaining("Account not found with id: 999");
+                .hasMessageContaining("Account not found with number: 999L");
 
-        verify(accountRepository).findById(999L);
+        verify(accountRepository).findByNumeroCuenta("999L");
     }
 
     @Test
@@ -208,31 +208,31 @@ class AccountServiceImplTest {
         updatedAccount.setNumeroCuenta("123456");
         updatedAccount.setEstado(false);
 
-        when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
+        when(accountRepository.findByNumeroCuenta("123456")).thenReturn(Optional.of(account));
         when(accountRepository.save(any(Account.class))).thenReturn(updatedAccount);
 
         // When
-        AccountResponseDto result = accountService.updateAccountStatus(1L, accountUpdateDto);
+        AccountResponseDto result = accountService.updateAccountStatus("123456", accountUpdateDto);
 
         // Then
         assertThat(result).isNotNull();
         assertThat(result.getEstado()).isFalse();
 
-        verify(accountRepository).findById(1L);
+        verify(accountRepository).findByNumeroCuenta("123456");
         verify(accountRepository).save(any(Account.class));
     }
 
     @Test
     void whenUpdateAccountNotFound_thenThrowException() {
         // Given
-        when(accountRepository.findById(999L)).thenReturn(Optional.empty());
+        when(accountRepository.findByNumeroCuenta("999L")).thenReturn(Optional.empty());
 
         // When & Then
-        assertThatThrownBy(() -> accountService.updateAccountStatus(999L, accountUpdateDto))
+        assertThatThrownBy(() -> accountService.updateAccountStatus("999L", accountUpdateDto))
                 .isInstanceOf(AccountNotFoundException.class)
                 .hasMessageContaining("Account not found with id: 999");
 
-        verify(accountRepository).findById(999L);
+        verify(accountRepository).findByNumeroCuenta("999L");
         verify(accountRepository, never()).save(any(Account.class));
     }
 

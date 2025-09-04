@@ -62,6 +62,7 @@ public class MovementServiceImpl implements MovementService {
 
         account.setSaldoActual(newBalance);
         accountRepository.save(account);
+        movement.setSaldo(newBalance);
         Movement savedMovement = movementRepository.save(movement);
 
         return convertToDto(savedMovement);

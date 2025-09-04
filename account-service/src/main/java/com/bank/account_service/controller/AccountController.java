@@ -32,11 +32,6 @@ public class AccountController {
         );
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AccountResponseDto> getAccountById(@PathVariable Long id) {
-        return ResponseEntity.ok(accountService.getAccountById(id));
-    }
-
     @GetMapping("/number/{accountNumber}")
     public ResponseEntity<AccountResponseDto> getAccountByNumber(@PathVariable String accountNumber) {
         return ResponseEntity.ok(accountService.getAccountByNumber(accountNumber));
@@ -56,7 +51,7 @@ public class AccountController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<AccountResponseDto> updateAccountStatus(@PathVariable Long id,
+    public ResponseEntity<AccountResponseDto> updateAccountStatus(@PathVariable String id,
                                                                   @Valid @RequestBody AccountUpdateDto updateDto) {
         return ResponseEntity.ok(accountService.updateAccountStatus(id, updateDto));
     }

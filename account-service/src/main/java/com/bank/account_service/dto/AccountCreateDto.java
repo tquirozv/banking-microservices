@@ -3,7 +3,7 @@ package com.bank.account_service.dto;
 import com.bank.account_service.entity.Account.AccountType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import java.math.BigDecimal;
 
@@ -16,7 +16,7 @@ public class AccountCreateDto {
     private AccountType tipoCuenta;
 
     @NotNull(message = "Initial balance is required")
-    @Positive(message = "Initial balance must be positive")
+    @PositiveOrZero(message = "Initial balance must be positive")
     private BigDecimal saldoInicial;
 
     @NotNull(message = "Client ID is required")

@@ -41,13 +41,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountResponseDto getAccountById(Long id) {
-        return accountRepository.findById(id)
-            .map(this::convertToDto)
-            .orElseThrow(() -> new AccountNotFoundException("Account not found with id: " + id));
-    }
-
-    @Override
     public AccountResponseDto getAccountByNumber(String accountNumber) {
         return accountRepository.findByNumeroCuenta(accountNumber)
             .map(this::convertToDto)
@@ -77,9 +70,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public AccountResponseDto updateAccountStatus(Long id, AccountUpdateDto updateDto) {
-        Account account = accountRepository.findById(id)
-            .orElseThrow(() -> new AccountNotFoundException("Account not found with id: " + id));
+    public AccountResponseDto updateAccountStatus(String numeroCuenta, AccountUpdateDto updateDto) {
+        Account account = accountRepository.findByNumeroCuenta(numeroCuenta)
+            .orElseThrow(() -> new AccountNotFoundException("Account not found with id: " + numeroCuenta));
         
         account.setEstado(updateDto.getEstado());
         return convertToDto(accountRepository.save(account));

@@ -13,12 +13,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AccountControllerTest {
@@ -59,16 +61,16 @@ class AccountControllerTest {
     @Test
     void getAccountById_ShouldReturnAccount() {
         // Arrange
-        Long id = 1L;
-        when(accountService.getAccountById(id)).thenReturn(mockAccountResponse);
+        String numeroCuenta = "1L";
+        when(accountService.getAccountByNumber(numeroCuenta)).thenReturn(mockAccountResponse);
 
         // Act
-        ResponseEntity<AccountResponseDto> response = accountController.getAccountById(id);
+        ResponseEntity<AccountResponseDto> response = accountController.getAccountByNumber(numeroCuenta);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(mockAccountResponse, response.getBody());
-        verify(accountService).getAccountById(id);
+        verify(accountService).getAccountByNumber(numeroCuenta);
     }
 
     @Test
@@ -136,17 +138,17 @@ class AccountControllerTest {
     @Test
     void updateAccountStatus_ShouldReturnUpdatedAccount() {
         // Arrange
-        Long id = 1L;
-        when(accountService.updateAccountStatus(eq(id), any(AccountUpdateDto.class)))
+        String numeroCuenta = "1L";
+        when(accountService.updateAccountStatus(eq(numeroCuenta), any(AccountUpdateDto.class)))
                 .thenReturn(mockAccountResponse);
 
         // Act
-        ResponseEntity<AccountResponseDto> response = accountController.updateAccountStatus(id, mockAccountUpdateDto);
+        ResponseEntity<AccountResponseDto> response = accountController.updateAccountStatus(numeroCuenta, mockAccountUpdateDto);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(mockAccountResponse, response.getBody());
-        verify(accountService).updateAccountStatus(id, mockAccountUpdateDto);
+        verify(accountService).updateAccountStatus(numeroCuenta, mockAccountUpdateDto);
     }
 
     @Test

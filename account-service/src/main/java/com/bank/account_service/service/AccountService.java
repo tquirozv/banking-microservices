@@ -6,8 +6,6 @@ import java.util.List;
 public interface AccountService {
     AccountResponseDto createAccount(AccountCreateDto accountDto);
     
-    AccountResponseDto getAccountById(Long id);
-    
     AccountResponseDto getAccountByNumber(String accountNumber);
     
     List<AccountResponseDto> getAccountsByClientId(Long clientId);
@@ -16,7 +14,7 @@ public interface AccountService {
     
     List<AccountResponseDto> getAccountsByStatus(Boolean estado);
     
-    AccountResponseDto updateAccountStatus(Long id, AccountUpdateDto updateDto);
+    AccountResponseDto updateAccountStatus(String numeroCuenta, AccountUpdateDto updateDto);
     
     void deleteAccount(Long id);
 
