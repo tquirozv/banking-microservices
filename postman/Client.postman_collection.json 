@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "ClientController",
+    "name": "Client API",
     "description": "Collection for ClientController endpoints. Adjust variables baseUrl and basePath if your mapping differs.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },

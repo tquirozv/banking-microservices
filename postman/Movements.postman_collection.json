@@ -1,0 +1,68 @@
+{
+    "info": {
+        "name": "Movements APIs",
+      "description": "Collection for MovementsController endpoints. Adjust variables baseUrl and basePath if your mapping differs.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+      { "key": "baseUrl", "value": "http://localhost:8081" }
+    ],
+    "item": [
+        {
+            "name": "Movements",
+            "item": [
+                {
+                    "name": "Create Movement",
+                    "request": {
+                        "method": "POST",
+                        "url": "{{baseUrl}}/api/movimientos",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"cuentaId\": \"123456789\",\n  \"tipoMovimiento\": \"DEBITO\",\n  \"valor\": 100.00\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Get Movement by ID",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/api/movimientos/1"
+                    }
+                },
+                {
+                    "name": "Get Movements by Account",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/api/movimientos/account/123456789"
+                    }
+                },
+                {
+                    "name": "Get Movements by Date Range",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/api/movimientos/account/123456789/date-range?startDate=2024-01-01T00:00:00&endDate=2024-12-31T23:59:59"
+                    }
+                },
+                {
+                    "name": "Get Movements by Type",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/api/movimientos/account/123456789/type/DEBITO"
+                    }
+                },
+                {
+                    "name": "Delete Movement",
+                    "request": {
+                        "method": "DELETE",
+                        "url": "{{baseUrl}}/api/movimientos/1"
+                    }
+                }
+            ]
+        }
+    ]
+}

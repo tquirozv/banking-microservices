@@ -1,0 +1,77 @@
+{
+  "info": {
+    "name": "Account APIs",
+    "description": "Collection for AccountController endpoints. Adjust variables baseUrl and basePath if your mapping differs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8081" }
+  ],
+  "item": [
+    {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "Create Account",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/cuentas",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 1,\n  \"numeroCuenta\": \"123456789\",\n  \"tipoCuenta\": \"AHORRO\",\n  \"saldoInicial\": 1000.00,\n  \"estado\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Get Account by Number",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/cuentas/number/123456789"
+          }
+        },
+        {
+          "name": "Get Accounts by Client",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/cuentas/client/1"
+          }
+        },
+        {
+          "name": "Get All Accounts",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/cuentas"
+          }
+        },
+        {
+          "name": "Update Account Status",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/cuentas/123456789",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Account",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/cuentas/123456789"
+          }
+        }
+      ]
+    }
+  ]
+}
