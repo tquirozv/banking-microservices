@@ -1,0 +1,132 @@
+{
+  "info": {
+    "name": "ClientController",
+    "description": "Collection for ClientController endpoints. Adjust variables baseUrl and basePath if your mapping differs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "basePath", "value": "/api/clientes" },
+    { "key": "id", "value": "1" },
+    { "key": "identificacion", "value": "1234567890" },
+    { "key": "estado", "value": "true" }
+  ],
+  "item": [
+    {
+      "name": "Create Client",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clienteid\": null,\n  \"persona\": {\n    \"identificacion\": \"{{identificacion}}\",\n    \"nombre\": \"John Doe\",\n    \"genero\": \"M\",\n    \"edad\": 30,\n    \"direccion\": \"123 Main St\",\n    \"telefono\": \"555-123-4567\"\n  },\n  \"contrasena\": \"<password>\",\n  \"estado\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}{{basePath}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{basePath}}"]
+        },
+        "description": "Creates a new client."
+      }
+    },
+    {
+      "name": "Get Client by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}{{basePath}}/{{id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{basePath}}", "{{id}}"]
+        },
+        "description": "Retrieves a client by numeric ID."
+      }
+    },
+    {
+      "name": "Get Client by Identificacion (path)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}{{basePath}}/identificacion/{{identificacion}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{basePath}}", "identificacion", "{{identificacion}}"]
+        },
+        "description": "Retrieves a client by identificacion via path segment."
+      }
+    },
+    {
+      "name": "Get Client by Identificacion (query)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}{{basePath}}?identificacion={{identificacion}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{basePath}}"],
+          "query": [
+            { "key": "identificacion", "value": "{{identificacion}}" }
+          ]
+        },
+        "description": "Retrieves a client by identificacion via query parameter."
+      }
+    },
+    {
+      "name": "Get All Clients",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}{{basePath}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{basePath}}"]
+        },
+        "description": "Lists all clients."
+      }
+    },
+    {
+      "name": "Get Clients by Estado (query)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}{{basePath}}?estado={{estado}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{basePath}}"],
+          "query": [
+            { "key": "estado", "value": "{{estado}}" }
+          ]
+        },
+        "description": "Filters clients by estado via query parameter."
+      }
+    },
+    {
+      "name": "Update Client (PUT)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"persona\": {\n    \"nombre\": \"Jane Doe\",\n    \"genero\": \"F\",\n    \"edad\": 31,\n    \"direccion\": \"456 Oak Ave\",\n    \"telefono\": \"555-987-6543\"\n  },\n  \"contrasena\": \"<new-password>\",\n  \"estado\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}{{basePath}}/{{id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{basePath}}", "{{id}}"]
+        },
+        "description": "Updates an existing client by ID. Include only the fields you want to change."
+      }
+    },
+    {
+      "name": "Delete Client",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}{{basePath}}/{{id}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{basePath}}", "{{id}}"]
+        },
+        "description": "Deletes a client by ID."
+      }
+    }
+  ]
+}
