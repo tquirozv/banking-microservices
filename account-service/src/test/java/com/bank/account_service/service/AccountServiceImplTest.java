@@ -4,8 +4,8 @@ import com.bank.account_service.dto.AccountCreateDto;
 import com.bank.account_service.dto.AccountResponseDto;
 import com.bank.account_service.dto.AccountUpdateDto;
 import com.bank.account_service.entity.Account;
-import com.bank.account_service.repository.AccountRepository;
 import com.bank.account_service.exception.AccountNotFoundException;
+import com.bank.account_service.repository.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AccountServiceImplTest {
@@ -47,7 +49,6 @@ class AccountServiceImplTest {
         accountCreateDto.setClienteId(1L);
 
         account = new Account();
-        account.setId(1L);
         account.setNumeroCuenta("123456");
         account.setTipoCuenta(Account.AccountType.AHORRO);
         account.setSaldoInicial(BigDecimal.valueOf(1000.00));
@@ -108,7 +109,6 @@ class AccountServiceImplTest {
         // Then
         assertThat(result).hasSize(1);
         assertThat(result.getFirst().getNumeroCuenta()).isEqualTo("123456");
-        assertThat(result.getFirst().getId()).isEqualTo(1L);
 
         verify(accountRepository).findAll();
     }
@@ -123,7 +123,6 @@ class AccountServiceImplTest {
 
         // Then
         assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getNumeroCuenta()).isEqualTo("123456");
 
         verify(accountRepository).findById(1L);
@@ -206,7 +205,6 @@ class AccountServiceImplTest {
     void whenUpdateAccount_thenReturnUpdatedAccount() {
         // Given
         Account updatedAccount = new Account();
-        updatedAccount.setId(1L);
         updatedAccount.setNumeroCuenta("123456");
         updatedAccount.setEstado(false);
 
@@ -218,7 +216,6 @@ class AccountServiceImplTest {
 
         // Then
         assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getEstado()).isFalse();
 
         verify(accountRepository).findById(1L);

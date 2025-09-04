@@ -20,8 +20,8 @@ public class Movement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cuenta_id", nullable = false)
-    private Long cuentaId;
+    @Column(name = "numero_cuenta", nullable = false)
+    private String numeroCuenta;
 
     @Column(nullable = false)
     private LocalDateTime fecha = LocalDateTime.now();

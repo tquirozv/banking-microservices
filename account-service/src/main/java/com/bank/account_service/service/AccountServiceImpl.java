@@ -97,7 +97,6 @@ public class AccountServiceImpl implements AccountService {
 
     private AccountResponseDto convertToDto(Account account) {
         AccountResponseDto dto = new AccountResponseDto();
-        dto.setId(account.getId());
         dto.setNumeroCuenta(account.getNumeroCuenta());
         dto.setTipoCuenta(account.getTipoCuenta());
         dto.setSaldoInicial(account.getSaldoInicial());

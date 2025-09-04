@@ -14,12 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class MovementControllerTest {
@@ -77,7 +78,7 @@ class MovementControllerTest {
     @Test
     void getMovementsByAccountId_ShouldReturnMovementsList() {
         // Arrange
-        Long accountId = 1L;
+        String accountId = "1L";
         List<MovementResponseDto> movements = Collections.singletonList(mockMovementResponse);
         when(movementService.getMovementsByAccountId(accountId)).thenReturn(movements);
 
@@ -93,7 +94,7 @@ class MovementControllerTest {
     @Test
     void getMovementsByAccountIdAndDateRange_ShouldReturnMovementsList() {
         // Arrange
-        Long accountId = 1L;
+        String accountId = "1L";
         List<MovementResponseDto> movements = Collections.singletonList(mockMovementResponse);
         when(movementService.getMovementsByAccountIdAndDateRange(accountId, startDate, endDate))
                 .thenReturn(movements);
@@ -111,7 +112,7 @@ class MovementControllerTest {
     @Test
     void getMovementsByAccountIdAndType_ShouldReturnMovementsList() {
         // Arrange
-        Long accountId = 1L;
+        String accountId = "1L";
         Movement.MovementType movementType = Movement.MovementType.CREDITO;
         List<MovementResponseDto> movements = Collections.singletonList(mockMovementResponse);
         when(movementService.getMovementsByAccountIdAndType(accountId, movementType))

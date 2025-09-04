@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class AccountResponseDto {
-    private Long id;
     private String numeroCuenta;
     private AccountType tipoCuenta;
     private BigDecimal saldoInicial;

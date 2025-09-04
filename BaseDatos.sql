@@ -57,7 +57,7 @@ CREATE TABLE cuentas (
 -- Movements table
 CREATE TABLE movimientos (
     id BIGSERIAL PRIMARY KEY,
-    cuenta_id VARCHAR(20) NOT NULL REFERENCES cuentas(numero_cuenta) ON DELETE CASCADE,
+    numero_cuenta VARCHAR(20) NOT NULL REFERENCES cuentas(numero_cuenta) ON DELETE CASCADE,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     tipo_movimiento VARCHAR(20) NOT NULL CHECK (tipo_movimiento IN ('CREDITO', 'DEBITO')),
     valor DECIMAL(15,2) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE movimientos (
 );
 
 -- Indexes for better performance
-CREATE INDEX IF NOT EXISTS idx_movimientos_cuenta_fecha ON movimientos(cuenta_id, fecha DESC);
+CREATE INDEX IF NOT EXISTS idx_movimientos_cuenta_fecha ON movimientos(numero_cuenta, fecha DESC);
 CREATE INDEX IF NOT EXISTS idx_movimientos_tipo ON movimientos(tipo_movimiento);
 CREATE INDEX IF NOT EXISTS idx_clientes_estado ON clientes(estado);
 CREATE INDEX IF NOT EXISTS idx_clientes_persona_id ON clientes(persona_id);
@@ -101,7 +101,7 @@ INSERT INTO cuentas (numero_cuenta, tipo_cuenta, saldo_inicial, saldo_actual, cl
 ('001-000002', 'CORRIENTE', 500.00, 500.00, 5),
 ('001-000003', 'AHORRO', 2000.00, 2000.00, 6);
 
-INSERT INTO movimientos (cuenta_id, tipo_movimiento, valor, saldo, descripcion) VALUES 
+INSERT INTO movimientos (numero_cuenta, tipo_movimiento, valor, saldo, descripcion) VALUES
 ('478758', 'CREDITO', 2000.00, 2000.00, 'Depósito inicial'),
 ('225487', 'CREDITO', 100.00, 100.00, 'Depósito inicial'),
 ('495878', 'CREDITO', 0.00, 0.00, 'Depósito inicial'),

@@ -153,8 +153,8 @@ class AccountRepositoryTest {
         newAccount.setClienteId(3L);
 
         Account saved = accountRepository.save(newAccount);
+        entityManager.persistAndFlush(saved);
 
-        assertThat(saved.getId()).isNotNull();
         assertThat(saved.getNumeroCuenta()).isEqualTo("NEW123");
         assertThat(saved.getCreatedAt()).isNotNull();
         assertThat(saved.getUpdatedAt()).isNotNull();
@@ -177,11 +177,11 @@ class AccountRepositoryTest {
     @Test
     void whenDeletingAccount_thenAccountIsRemoved() {
         Account account = accountRepository.findByNumeroCuenta("123456").orElseThrow();
-        Long accountId = account.getId();
+        String accountId = account.getNumeroCuenta();
 
         accountRepository.delete(account);
 
-        Optional<Account> deleted = accountRepository.findById(accountId);
+        Optional<Account> deleted = accountRepository.findByNumeroCuenta(accountId);
         assertThat(deleted).isNotPresent();
     }
 
@@ -197,9 +197,9 @@ class AccountRepositoryTest {
     @Test
     void whenFindById_thenReturnCorrectAccount() {
         Account account = accountRepository.findByNumeroCuenta("123456").orElseThrow();
-        Long accountId = account.getId();
+        String accountId = account.getNumeroCuenta();
 
-        Optional<Account> found = accountRepository.findById(accountId);
+        Optional<Account> found = accountRepository.findByNumeroCuenta(accountId);
 
         assertThat(found).isPresent();
         assertThat(found.get().getNumeroCuenta()).isEqualTo("123456");
@@ -215,10 +215,10 @@ class AccountRepositoryTest {
     @Test
     void whenCheckingExistence_thenReturnCorrectStatus() {
         Account account = accountRepository.findByNumeroCuenta("123456").orElseThrow();
-        Long accountId = account.getId();
+        String accountId = account.getNumeroCuenta();
 
-        boolean exists = accountRepository.existsById(accountId);
-        boolean notExists = accountRepository.existsById(999L);
+        boolean exists = accountRepository.existsByNumeroCuenta(accountId);
+        boolean notExists = accountRepository.existsByNumeroCuenta("999L");
 
         assertThat(exists).isTrue();
         assertThat(notExists).isFalse();

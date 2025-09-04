@@ -16,7 +16,7 @@ class MovementResponseDtoTest {
         LocalDateTime createdAt = LocalDateTime.now().minusHours(1);
 
         dto.setId(1L);
-        dto.setCuentaId(123L);
+        dto.setCuentaId("123L");
         dto.setFecha(now);
         dto.setTipoMovimiento(MovementType.CREDITO);
         dto.setValor(BigDecimal.valueOf(100.00));
@@ -25,7 +25,7 @@ class MovementResponseDtoTest {
         dto.setCreatedAt(createdAt);
 
         assertThat(dto.getId()).isEqualTo(1L);
-        assertThat(dto.getCuentaId()).isEqualTo(123L);
+        assertThat(dto.getCuentaId()).isEqualTo("123L");
         assertThat(dto.getFecha()).isEqualTo(now);
         assertThat(dto.getTipoMovimiento()).isEqualTo(MovementType.CREDITO);
         assertThat(dto.getValor()).isEqualByComparingTo(BigDecimal.valueOf(100.00));
@@ -54,21 +54,21 @@ class MovementResponseDtoTest {
         
         MovementResponseDto dto1 = new MovementResponseDto();
         dto1.setId(1L);
-        dto1.setCuentaId(123L);
+        dto1.setCuentaId("123L");
         dto1.setFecha(now);
         dto1.setTipoMovimiento(MovementType.CREDITO);
         dto1.setValor(BigDecimal.valueOf(100.00));
 
         MovementResponseDto dto2 = new MovementResponseDto();
         dto2.setId(1L);
-        dto2.setCuentaId(123L);
+        dto2.setCuentaId("123L");
         dto2.setFecha(now);
         dto2.setTipoMovimiento(MovementType.CREDITO);
         dto2.setValor(BigDecimal.valueOf(100.00));
 
         MovementResponseDto dto3 = new MovementResponseDto();
         dto3.setId(2L);
-        dto3.setCuentaId(456L);
+        dto3.setCuentaId("456L");
         dto3.setTipoMovimiento(MovementType.DEBITO);
 
         assertThat(dto1).isEqualTo(dto2);
@@ -80,7 +80,7 @@ class MovementResponseDtoTest {
     void testToString() {
         MovementResponseDto dto = new MovementResponseDto();
         dto.setId(1L);
-        dto.setCuentaId(123L);
+        dto.setCuentaId("123L");
         dto.setTipoMovimiento(MovementType.CREDITO);
         dto.setValor(BigDecimal.valueOf(100.00));
         dto.setDescripcion("Deposit");
@@ -138,7 +138,7 @@ class MovementResponseDtoTest {
         LocalDateTime now = LocalDateTime.now();
 
         dto.setId(2L);
-        dto.setCuentaId(456L);
+        dto.setCuentaId("456L");
         dto.setFecha(now);
         dto.setTipoMovimiento(MovementType.DEBITO);
         dto.setValor(BigDecimal.valueOf(50.00));
@@ -147,7 +147,7 @@ class MovementResponseDtoTest {
         dto.setCreatedAt(now);
 
         assertThat(dto.getId()).isEqualTo(2L);
-        assertThat(dto.getCuentaId()).isEqualTo(456L);
+        assertThat(dto.getCuentaId()).isEqualTo("456L");
         assertThat(dto.getTipoMovimiento()).isEqualTo(MovementType.DEBITO);
         assertThat(dto.getValor()).isEqualByComparingTo(BigDecimal.valueOf(50.00));
         assertThat(dto.getSaldo()).isEqualByComparingTo(BigDecimal.valueOf(950.00));

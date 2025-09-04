@@ -19,7 +19,7 @@ import org.springframework.test.context.TestPropertySource;
     "spring.jpa.hibernate.ddl-auto=create-drop"
 })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-class ClientKarateRunner {
+class ClientKarateRunnerTest {
 
     @LocalServerPort
     private int port;

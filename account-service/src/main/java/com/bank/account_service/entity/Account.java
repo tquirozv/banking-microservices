@@ -6,8 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -26,9 +24,6 @@ import java.util.List;
 @Data
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "numero_cuenta", unique = true, nullable = false)
     private String numeroCuenta;
 
@@ -67,10 +62,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long id, String numeroCuenta, AccountType tipoCuenta, BigDecimal saldoInicial,
+    public Account(String numeroCuenta, AccountType tipoCuenta, BigDecimal saldoInicial,
                    BigDecimal saldoActual, Boolean estado, Long clienteId, List<Movement> movimientos,
                    LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
         this.numeroCuenta = numeroCuenta;
         this.tipoCuenta = tipoCuenta;
         this.saldoInicial = saldoInicial;
@@ -86,7 +80,6 @@ public class Account {
         if (cuenta == null) {
             return;
         }
-        this.id = cuenta.id;
         this.numeroCuenta = cuenta.numeroCuenta;
         this.tipoCuenta = cuenta.tipoCuenta;
         this.saldoInicial = cuenta.saldoInicial;

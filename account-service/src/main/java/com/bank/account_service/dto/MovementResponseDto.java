@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class MovementResponseDto {
     private Long id;
-    private Long cuentaId;
+    private String cuentaId;
     private LocalDateTime fecha;
     private MovementType tipoMovimiento;
     private BigDecimal valor;

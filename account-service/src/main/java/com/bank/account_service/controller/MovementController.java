@@ -39,13 +39,13 @@ public class MovementController {
     }
 
     @GetMapping("/account/{accountId}")
-    public ResponseEntity<List<MovementResponseDto>> getMovementsByAccountId(@PathVariable Long accountId) {
+    public ResponseEntity<List<MovementResponseDto>> getMovementsByAccountId(@PathVariable String accountId) {
         return ResponseEntity.ok(movementService.getMovementsByAccountId(accountId));
     }
 
     @GetMapping("/account/{accountId}/date-range")
     public ResponseEntity<List<MovementResponseDto>> getMovementsByAccountIdAndDateRange(
-            @PathVariable Long accountId,
+            @PathVariable String accountId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
         return ResponseEntity.ok(
@@ -55,7 +55,7 @@ public class MovementController {
 
     @GetMapping("/account/{accountId}/type/{movementType}")
     public ResponseEntity<List<MovementResponseDto>> getMovementsByAccountIdAndType(
-            @PathVariable Long accountId,
+            @PathVariable String accountId,
             @PathVariable Movement.MovementType movementType) {
         return ResponseEntity.ok(
             movementService.getMovementsByAccountIdAndType(accountId, movementType)

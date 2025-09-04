@@ -22,8 +22,7 @@ class AccountTest {
     @Test
     void whenCreatingAccountWithDefaultConstructor_thenDefaultValuesAreSet() {
         Account newAccount = new Account();
-        
-        assertThat(newAccount.getId()).isNull();
+
         assertThat(newAccount.getNumeroCuenta()).isNull();
         assertThat(newAccount.getTipoCuenta()).isNull();
         assertThat(newAccount.getSaldoInicial()).isEqualByComparingTo(BigDecimal.ZERO);
@@ -42,7 +41,6 @@ class AccountTest {
         List<Movement> movements = new ArrayList<>();
         
         Account account = new Account(
-            1L,
             "123456",
             Account.AccountType.AHORRO,
             BigDecimal.valueOf(1000.00),
@@ -54,7 +52,6 @@ class AccountTest {
             updatedAt
         );
 
-        assertThat(account.getId()).isEqualTo(1L);
         assertThat(account.getNumeroCuenta()).isEqualTo("123456");
         assertThat(account.getTipoCuenta()).isEqualTo(Account.AccountType.AHORRO);
         assertThat(account.getSaldoInicial()).isEqualByComparingTo(BigDecimal.valueOf(1000.00));
@@ -72,7 +69,6 @@ class AccountTest {
         LocalDateTime updatedAt = LocalDateTime.now().minusHours(1);
         List<Movement> movements = new ArrayList<>();
 
-        account.setId(1L);
         account.setNumeroCuenta("123456");
         account.setTipoCuenta(Account.AccountType.AHORRO);
         account.setSaldoInicial(BigDecimal.valueOf(1000.00));
@@ -83,7 +79,6 @@ class AccountTest {
         account.setCreatedAt(createdAt);
         account.setUpdatedAt(updatedAt);
 
-        assertThat(account.getId()).isEqualTo(1L);
         assertThat(account.getNumeroCuenta()).isEqualTo("123456");
         assertThat(account.getTipoCuenta()).isEqualTo(Account.AccountType.AHORRO);
         assertThat(account.getSaldoInicial()).isEqualByComparingTo(BigDecimal.valueOf(1000.00));
@@ -141,19 +136,16 @@ class AccountTest {
     @Test
     void testEqualsAndHashCode() {
         Account account1 = new Account();
-        account1.setId(1L);
         account1.setNumeroCuenta("123456");
         account1.setTipoCuenta(Account.AccountType.AHORRO);
         account1.setClienteId(100L);
 
         Account account2 = new Account();
-        account2.setId(1L);
         account2.setNumeroCuenta("123456");
         account2.setTipoCuenta(Account.AccountType.AHORRO);
         account2.setClienteId(100L);
 
         Account account3 = new Account();
-        account3.setId(2L);
         account3.setNumeroCuenta("654321");
         account3.setTipoCuenta(Account.AccountType.CORRIENTE);
         account3.setClienteId(200L);
@@ -165,7 +157,6 @@ class AccountTest {
 
     @Test
     void testToString() {
-        account.setId(1L);
         account.setNumeroCuenta("123456");
         account.setTipoCuenta(Account.AccountType.AHORRO);
         account.setClienteId(100L);
@@ -173,7 +164,6 @@ class AccountTest {
         String toString = account.toString();
         
         assertThat(toString).contains("Account");
-        assertThat(toString).contains("id=1");
         assertThat(toString).contains("numeroCuenta=123456");
         assertThat(toString).contains("tipoCuenta=AHORRO");
         assertThat(toString).contains("clienteId=100");

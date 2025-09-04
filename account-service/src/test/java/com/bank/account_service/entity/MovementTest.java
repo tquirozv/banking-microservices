@@ -16,7 +16,6 @@ class MovementTest {
     @BeforeEach
     void setUp() {
         account = new Account();
-        account.setId(1L);
         account.setNumeroCuenta("123456");
         account.setTipoCuenta(Account.AccountType.AHORRO);
         
@@ -28,7 +27,7 @@ class MovementTest {
         Movement newMovement = new Movement();
         
         assertThat(newMovement.getId()).isNull();
-        assertThat(newMovement.getCuentaId()).isNull();
+        assertThat(newMovement.getNumeroCuenta()).isNull();
         assertThat(newMovement.getFecha()).isNotNull(); // Default value is LocalDateTime.now()
         assertThat(newMovement.getTipoMovimiento()).isNull();
         assertThat(newMovement.getValor()).isNull();
@@ -44,7 +43,7 @@ class MovementTest {
         
         Movement movement = new Movement(
             1L,
-            account.getId(),
+            account.getNumeroCuenta(),
             now,
             Movement.MovementType.CREDITO,
             BigDecimal.valueOf(100.00),
@@ -54,7 +53,7 @@ class MovementTest {
         );
 
         assertThat(movement.getId()).isEqualTo(1L);
-        assertThat(movement.getCuentaId()).isEqualTo(account.getId());
+        assertThat(movement.getNumeroCuenta()).isEqualTo(account.getNumeroCuenta());
         assertThat(movement.getFecha()).isEqualTo(now);
         assertThat(movement.getTipoMovimiento()).isEqualTo(Movement.MovementType.CREDITO);
         assertThat(movement.getValor()).isEqualByComparingTo(BigDecimal.valueOf(100.00));
@@ -69,7 +68,7 @@ class MovementTest {
         LocalDateTime createdAt = LocalDateTime.now().minusHours(1);
 
         movement.setId(1L);
-        movement.setCuentaId(account.getId());
+        movement.setNumeroCuenta(account.getNumeroCuenta());
         movement.setFecha(now);
         movement.setTipoMovimiento(Movement.MovementType.CREDITO);
         movement.setValor(BigDecimal.valueOf(100.00));
@@ -78,7 +77,7 @@ class MovementTest {
         movement.setCreatedAt(createdAt);
 
         assertThat(movement.getId()).isEqualTo(1L);
-        assertThat(movement.getCuentaId()).isEqualTo(account.getId());
+        assertThat(movement.getNumeroCuenta()).isEqualTo(account.getNumeroCuenta());
         assertThat(movement.getFecha()).isEqualTo(now);
         assertThat(movement.getTipoMovimiento()).isEqualTo(Movement.MovementType.CREDITO);
         assertThat(movement.getValor()).isEqualByComparingTo(BigDecimal.valueOf(100.00));
@@ -128,13 +127,13 @@ class MovementTest {
         
         Movement movement1 = new Movement();
         movement1.setId(1L);
-        movement1.setCuentaId(account.getId());
+        movement1.setNumeroCuenta(account.getNumeroCuenta());
         movement1.setFecha(now);
         movement1.setTipoMovimiento(Movement.MovementType.CREDITO);
 
         Movement movement2 = new Movement();
         movement2.setId(1L);
-        movement2.setCuentaId(account.getId());
+        movement2.setNumeroCuenta(account.getNumeroCuenta());
         movement2.setFecha(now);
         movement2.setTipoMovimiento(Movement.MovementType.CREDITO);
 
@@ -150,7 +149,7 @@ class MovementTest {
     @Test
     void testToString() {
         movement.setId(1L);
-        movement.setCuentaId(account.getId());
+        movement.setNumeroCuenta(account.getNumeroCuenta());
         movement.setTipoMovimiento(Movement.MovementType.CREDITO);
         movement.setValor(BigDecimal.valueOf(100.00));
 
@@ -189,12 +188,11 @@ class MovementTest {
     @Test
     void whenAccountRelationshipIsSet_thenRelationshipWorks() {
         Account testAccount = new Account();
-        testAccount.setId(123L);
         testAccount.setNumeroCuenta("987654");
         
-        movement.setCuentaId(testAccount.getId());
+        movement.setNumeroCuenta(testAccount.getNumeroCuenta());
         
-        assertThat(movement.getCuentaId()).isNotNull();
-        assertThat(movement.getCuentaId()).isEqualTo(123L);
+        assertThat(movement.getNumeroCuenta()).isNotNull();
+        assertThat(movement.getNumeroCuenta()).isEqualTo("987654");
     }
 }

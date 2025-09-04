@@ -12,17 +12,17 @@ public interface MovementService {
     
     MovementResponseDto getMovementById(Long id);
     
-    List<MovementResponseDto> getMovementsByAccountId(Long accountId);
+    List<MovementResponseDto> getMovementsByAccountId(String accountId);
     
     List<MovementResponseDto> getMovementsByAccountIdAndDateRange(
-        Long accountId, 
-        LocalDateTime startDate, 
-        LocalDateTime endDate
+            String accountId,
+            LocalDateTime startDate,
+            LocalDateTime endDate
     );
     
     List<MovementResponseDto> getMovementsByAccountIdAndType(
-        Long accountId, 
-        MovementType movementType
+            String accountId,
+            MovementType movementType
     );
     
     void deleteMovement(Long id);

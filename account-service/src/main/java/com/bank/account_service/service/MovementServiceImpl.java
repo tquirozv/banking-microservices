@@ -27,7 +27,7 @@ public class MovementServiceImpl implements MovementService {
     @Override
     @Transactional
     public MovementResponseDto createMovement(MovementCreateDto movementDto) {
-        Account account = accountRepository.findById(movementDto.getCuentaId())
+        Account account = accountRepository.findByNumeroCuenta(movementDto.getCuentaId())
                 .orElseThrow(() -> new AccountNotFoundException("Account not found with id: " + movementDto.getCuentaId()));
 
         // Validate account is active
@@ -44,7 +44,7 @@ public class MovementServiceImpl implements MovementService {
         BigDecimal absAmount = movementDto.getValor().abs();
 
         Movement movement = new Movement();
-        movement.setCuentaId(account.getId());
+        movement.setNumeroCuenta(account.getNumeroCuenta());
         movement.setFecha(LocalDateTime.now());
         movement.setTipoMovimiento(movementDto.getTipoMovimiento());
         movement.setValor(absAmount);
@@ -75,24 +75,24 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
-    public List<MovementResponseDto> getMovementsByAccountId(Long accountId) {
-        return movementRepository.findByCuentaId(accountId).stream()
+    public List<MovementResponseDto> getMovementsByAccountId(String accountId) {
+        return movementRepository.findByNumeroCuenta(accountId).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<MovementResponseDto> getMovementsByAccountIdAndDateRange(
-            Long accountId, LocalDateTime startDate, LocalDateTime endDate) {
-        return movementRepository.findByCuentaIdAndFechaBetween(accountId, startDate, endDate).stream()
+            String accountId, LocalDateTime startDate, LocalDateTime endDate) {
+        return movementRepository.findByNumeroCuentaAndFechaBetween(accountId, startDate, endDate).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<MovementResponseDto> getMovementsByAccountIdAndType(
-            Long accountId, Movement.MovementType movementType) {
-        return movementRepository.findByCuentaIdAndTipoMovimiento(accountId, movementType).stream()
+            String accountId, Movement.MovementType movementType) {
+        return movementRepository.findByNumeroCuentaAndTipoMovimiento(accountId, movementType).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -103,8 +103,8 @@ public class MovementServiceImpl implements MovementService {
         Movement movement = movementRepository.findById(id)
                 .orElseThrow(() -> new MovementNotFoundException("Movement not found"));
 
-        Account account = accountRepository.findById(movement.getCuentaId())
-                .orElseThrow(() -> new AccountNotFoundException("Account not found with id: " + movement.getCuentaId()));
+        Account account = accountRepository.findByNumeroCuenta(movement.getNumeroCuenta())
+                .orElseThrow(() -> new AccountNotFoundException("Account not found with id: " + movement.getNumeroCuenta()));
 
         // Reverse the movement effect on account balance
         if (movement.getTipoMovimiento() == Movement.MovementType.CREDITO) {
@@ -120,7 +120,7 @@ public class MovementServiceImpl implements MovementService {
     private MovementResponseDto convertToDto(Movement movement) {
         MovementResponseDto dto = new MovementResponseDto();
         dto.setId(movement.getId());
-        dto.setCuentaId(movement.getCuentaId());
+        dto.setCuentaId(movement.getNumeroCuenta());
         dto.setFecha(movement.getFecha());
         dto.setTipoMovimiento(movement.getTipoMovimiento());
         dto.setValor(movement.getValor());

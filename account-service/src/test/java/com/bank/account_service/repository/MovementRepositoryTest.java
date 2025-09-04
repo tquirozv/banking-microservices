@@ -58,7 +58,7 @@ class MovementRepositoryTest {
         LocalDateTime baseTime = LocalDateTime.of(2024, 1, 15, 10, 0);
         
         movement1 = new Movement();
-        movement1.setCuentaId(testAccount1.getId());
+        movement1.setNumeroCuenta(testAccount1.getNumeroCuenta());
         movement1.setFecha(baseTime);
         movement1.setTipoMovimiento(Movement.MovementType.CREDITO);
         movement1.setValor(BigDecimal.valueOf(100.00));
@@ -66,7 +66,7 @@ class MovementRepositoryTest {
         movement1.setDescripcion("Deposit 1");
 
         movement2 = new Movement();
-        movement2.setCuentaId(testAccount1.getId());
+        movement2.setNumeroCuenta(testAccount1.getNumeroCuenta());
         movement2.setFecha(baseTime.plusHours(1));
         movement2.setTipoMovimiento(Movement.MovementType.DEBITO);
         movement2.setValor(BigDecimal.valueOf(50.00));
@@ -74,7 +74,7 @@ class MovementRepositoryTest {
         movement2.setDescripcion("Withdrawal 1");
 
         movement3 = new Movement();
-        movement3.setCuentaId(testAccount1.getId());
+        movement3.setNumeroCuenta(testAccount1.getNumeroCuenta());
         movement3.setFecha(baseTime.plusDays(1));
         movement3.setTipoMovimiento(Movement.MovementType.CREDITO);
         movement3.setValor(BigDecimal.valueOf(200.00));
@@ -82,7 +82,7 @@ class MovementRepositoryTest {
         movement3.setDescripcion("Deposit 2");
 
         movement4 = new Movement();
-        movement4.setCuentaId(testAccount2.getId());
+        movement4.setNumeroCuenta(testAccount2.getNumeroCuenta());
         movement4.setFecha(baseTime.plusHours(2));
         movement4.setTipoMovimiento(Movement.MovementType.CREDITO);
         movement4.setValor(BigDecimal.valueOf(75.00));
@@ -98,29 +98,29 @@ class MovementRepositoryTest {
     }
 
     @Test
-    void whenFindByCuentaIdWithExistingAccount_thenReturnMovements() {
-        List<Movement> movements = movementRepository.findByCuentaId(testAccount1.getId());
+    void whenFindByNumeroCuentaWithExistingAccount_thenReturnMovements() {
+        List<Movement> movements = movementRepository.findByNumeroCuenta(testAccount1.getNumeroCuenta());
 
         assertThat(movements).hasSize(3);
         assertThat(movements).extracting(Movement::getDescripcion)
                 .containsExactlyInAnyOrder("Deposit 1", "Withdrawal 1", "Deposit 2");
-        assertThat(movements).allMatch(m -> m.getCuentaId().equals(testAccount1.getId()));
+        assertThat(movements).allMatch(m -> m.getNumeroCuenta().equals(testAccount1.getNumeroCuenta()));
     }
 
     @Test
-    void whenFindByCuentaIdWithNonExistingAccount_thenReturnEmptyList() {
-        List<Movement> movements = movementRepository.findByCuentaId(999L);
+    void whenFindByNumeroCuentaWithNonExistingAccount_thenReturnEmptyList() {
+        List<Movement> movements = movementRepository.findByNumeroCuenta("999L");
 
         assertThat(movements).isEmpty();
     }
 
     @Test
-    void whenFindByCuentaIdAndFechaBetween_thenReturnMovementsInDateRange() {
+    void whenFindByNumeroCuentaAndFechaBetween_thenReturnMovementsInDateRange() {
         LocalDateTime startDate = LocalDateTime.of(2024, 1, 15, 9, 0);
         LocalDateTime endDate = LocalDateTime.of(2024, 1, 15, 12, 0);
 
-        List<Movement> movements = movementRepository.findByCuentaIdAndFechaBetween(
-                testAccount1.getId(), startDate, endDate);
+        List<Movement> movements = movementRepository.findByNumeroCuentaAndFechaBetween(
+                testAccount1.getNumeroCuenta(), startDate, endDate);
 
         assertThat(movements).hasSize(2);
         assertThat(movements).extracting(Movement::getDescripcion)
@@ -128,20 +128,20 @@ class MovementRepositoryTest {
     }
 
     @Test
-    void whenFindByCuentaIdAndFechaBetweenWithNoResults_thenReturnEmptyList() {
+    void whenFindByNumeroCuentaAndFechaBetweenWithNoResults_thenReturnEmptyList() {
         LocalDateTime startDate = LocalDateTime.of(2024, 2, 1, 0, 0);
         LocalDateTime endDate = LocalDateTime.of(2024, 2, 28, 23, 59);
 
-        List<Movement> movements = movementRepository.findByCuentaIdAndFechaBetween(
-                testAccount1.getId(), startDate, endDate);
+        List<Movement> movements = movementRepository.findByNumeroCuentaAndFechaBetween(
+                testAccount1.getNumeroCuenta(), startDate, endDate);
 
         assertThat(movements).isEmpty();
     }
 
     @Test
-    void whenFindByCuentaIdAndTipoMovimientoCredito_thenReturnOnlyCreditMovements() {
-        List<Movement> creditMovements = movementRepository.findByCuentaIdAndTipoMovimiento(
-                testAccount1.getId(), Movement.MovementType.CREDITO);
+    void whenFindByNumeroCuentaAndTipoMovimientoCredito_thenReturnOnlyCreditMovements() {
+        List<Movement> creditMovements = movementRepository.findByNumeroCuentaAndTipoMovimiento(
+                testAccount1.getNumeroCuenta(), Movement.MovementType.CREDITO);
 
         assertThat(creditMovements).hasSize(2);
         assertThat(creditMovements).extracting(Movement::getDescripcion)
@@ -151,9 +151,9 @@ class MovementRepositoryTest {
     }
 
     @Test
-    void whenFindByCuentaIdAndTipoMovimientoDebito_thenReturnOnlyDebitMovements() {
-        List<Movement> debitMovements = movementRepository.findByCuentaIdAndTipoMovimiento(
-                testAccount1.getId(), Movement.MovementType.DEBITO);
+    void whenFindByNumeroCuentaAndTipoMovimientoDebito_thenReturnOnlyDebitMovements() {
+        List<Movement> debitMovements = movementRepository.findByNumeroCuentaAndTipoMovimiento(
+                testAccount1.getNumeroCuenta(), Movement.MovementType.DEBITO);
 
         assertThat(debitMovements).hasSize(1);
         assertThat(debitMovements.getFirst().getDescripcion()).isEqualTo("Withdrawal 1");
@@ -161,9 +161,9 @@ class MovementRepositoryTest {
     }
 
     @Test
-    void whenFindByCuentaIdAndTipoMovimientoWithNoResults_thenReturnEmptyList() {
-        List<Movement> debitMovements = movementRepository.findByCuentaIdAndTipoMovimiento(
-                testAccount2.getId(), Movement.MovementType.DEBITO);
+    void whenFindByNumeroCuentaAndTipoMovimientoWithNoResults_thenReturnEmptyList() {
+        List<Movement> debitMovements = movementRepository.findByNumeroCuentaAndTipoMovimiento(
+                testAccount2.getNumeroCuenta(), Movement.MovementType.DEBITO);
 
         assertThat(debitMovements).isEmpty();
     }
@@ -171,7 +171,7 @@ class MovementRepositoryTest {
     @Test
     void whenSavingNewMovement_thenMovementIsPersisted() {
         Movement newMovement = new Movement();
-        newMovement.setCuentaId(testAccount2.getId());
+        newMovement.setNumeroCuenta(testAccount2.getNumeroCuenta());
         newMovement.setFecha(LocalDateTime.now());
         newMovement.setTipoMovimiento(Movement.MovementType.DEBITO);
         newMovement.setValor(BigDecimal.valueOf(25.00));
@@ -194,13 +194,13 @@ class MovementRepositoryTest {
 
     @Test
     void whenDeletingMovement_thenMovementIsRemoved() {
-        Movement movement = movementRepository.findByCuentaId(testAccount1.getId()).getFirst();
+        Movement movement = movementRepository.findByNumeroCuenta(testAccount1.getNumeroCuenta()).getFirst();
         Long movementId = movement.getId();
 
         movementRepository.delete(movement);
 
         assertThat(movementRepository.findById(movementId)).isNotPresent();
-        assertThat(movementRepository.findByCuentaId(testAccount1.getId())).hasSize(2);
+        assertThat(movementRepository.findByNumeroCuenta(testAccount1.getNumeroCuenta())).hasSize(2);
     }
 
     @Test
@@ -212,7 +212,7 @@ class MovementRepositoryTest {
 
     @Test
     void whenFindByIdWithExistingMovement_thenReturnMovement() {
-        Movement movement = movementRepository.findByCuentaId(testAccount1.getId()).getFirst();
+        Movement movement = movementRepository.findByNumeroCuenta(testAccount1.getNumeroCuenta()).getFirst();
         Long movementId = movement.getId();
 
         assertThat(movementRepository.findById(movementId)).isPresent();
@@ -220,7 +220,7 @@ class MovementRepositoryTest {
 
     @Test
     void whenUpdatingMovement_thenChangesArePersisted() {
-        Movement movement = movementRepository.findByCuentaId(testAccount1.getId()).getFirst();
+        Movement movement = movementRepository.findByNumeroCuenta(testAccount1.getNumeroCuenta()).getFirst();
         
         movement.setDescripcion("Updated description");
         movement.setSaldo(BigDecimal.valueOf(9999.99));
@@ -232,23 +232,23 @@ class MovementRepositoryTest {
     }
 
     @Test
-    void whenFindByCuentaIdOrderedByFecha_thenMovementsAreOrderedByDate() {
-        List<Movement> movements = movementRepository.findByCuentaId(testAccount1.getId());
+    void whenFindByCuentaIdOrderedByFecha_thenMovementsAreOrderedByNumeroDate() {
+        List<Movement> movements = movementRepository.findByNumeroCuenta(testAccount1.getNumeroCuenta());
 
         // Verify movements are in chronological order (assuming default ordering)
         assertThat(movements).hasSize(3);
         
         // Check if movements maintain their relationship to the account
-        assertThat(movements).allMatch(m -> m.getCuentaId().equals(testAccount1.getId()));
+        assertThat(movements).allMatch(m -> m.getNumeroCuenta().equals(testAccount1.getNumeroCuenta()));
     }
 
     @Test
-    void whenFindByCuentaIdWithDateRangeCoveringAllMovements_thenReturnAllAccountMovements() {
+    void whenFindByNumeroCuentaWithDateRangeCoveringAllMovements_thenReturnAllAccountMovements() {
         LocalDateTime startDate = LocalDateTime.of(2024, 1, 1, 0, 0);
         LocalDateTime endDate = LocalDateTime.of(2024, 12, 31, 23, 59);
 
-        List<Movement> movements = movementRepository.findByCuentaIdAndFechaBetween(
-                testAccount1.getId(), startDate, endDate);
+        List<Movement> movements = movementRepository.findByNumeroCuentaAndFechaBetween(
+                testAccount1.getNumeroCuenta(), startDate, endDate);
 
         assertThat(movements).hasSize(3);
     }

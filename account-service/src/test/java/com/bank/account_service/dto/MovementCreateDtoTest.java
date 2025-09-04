@@ -25,7 +25,7 @@ class MovementCreateDtoTest {
     @Test
     void whenAllFieldsAreValid_thenNoValidationErrors() {
         MovementCreateDto dto = new MovementCreateDto();
-        dto.setCuentaId(1L);
+        dto.setCuentaId("123456");
         dto.setTipoMovimiento(MovementType.CREDITO);
         dto.setValor(BigDecimal.valueOf(100.00));
         dto.setDescripcion("Test movement");
@@ -33,7 +33,7 @@ class MovementCreateDtoTest {
         Set<ConstraintViolation<MovementCreateDto>> violations = validator.validate(dto);
         
         assertThat(violations).isEmpty();
-        assertThat(dto.getCuentaId()).isEqualTo(1L);
+        assertThat(dto.getCuentaId()).isEqualTo("123456");
         assertThat(dto.getTipoMovimiento()).isEqualTo(MovementType.CREDITO);
         assertThat(dto.getValor()).isEqualByComparingTo(BigDecimal.valueOf(100.00));
         assertThat(dto.getDescripcion()).isEqualTo("Test movement");
@@ -42,7 +42,7 @@ class MovementCreateDtoTest {
     @Test
     void whenDescripcionIsNull_thenNoValidationErrors() {
         MovementCreateDto dto = new MovementCreateDto();
-        dto.setCuentaId(1L);
+        dto.setCuentaId("123456");
         dto.setTipoMovimiento(MovementType.CREDITO);
         dto.setValor(BigDecimal.valueOf(100.00));
         dto.setDescripcion(null);
@@ -70,7 +70,7 @@ class MovementCreateDtoTest {
     @Test
     void whenTipoMovimientoIsNull_thenValidationError() {
         MovementCreateDto dto = new MovementCreateDto();
-        dto.setCuentaId(1L);
+        dto.setCuentaId("123456");
         dto.setTipoMovimiento(null);
         dto.setValor(BigDecimal.valueOf(100.00));
         dto.setDescripcion("Test movement");
@@ -84,7 +84,7 @@ class MovementCreateDtoTest {
     @Test
     void whenValorIsNull_thenValidationError() {
         MovementCreateDto dto = new MovementCreateDto();
-        dto.setCuentaId(1L);
+        dto.setCuentaId("123456");
         dto.setTipoMovimiento(MovementType.CREDITO);
         dto.setValor(null);
         dto.setDescripcion("Test movement");
@@ -98,7 +98,7 @@ class MovementCreateDtoTest {
     @Test
     void whenValorIsNegative_thenValidationError() {
         MovementCreateDto dto = new MovementCreateDto();
-        dto.setCuentaId(1L);
+        dto.setCuentaId("123456");
         dto.setTipoMovimiento(MovementType.CREDITO);
         dto.setValor(BigDecimal.valueOf(-100.00));
         dto.setDescripcion("Test movement");
@@ -112,7 +112,7 @@ class MovementCreateDtoTest {
     @Test
     void whenValorIsZero_thenValidationError() {
         MovementCreateDto dto = new MovementCreateDto();
-        dto.setCuentaId(1L);
+        dto.setCuentaId("123456");
         dto.setTipoMovimiento(MovementType.CREDITO);
         dto.setValor(BigDecimal.ZERO);
         dto.setDescripcion("Test movement");
@@ -139,19 +139,19 @@ class MovementCreateDtoTest {
     @Test
     void testEqualsAndHashCode() {
         MovementCreateDto dto1 = new MovementCreateDto();
-        dto1.setCuentaId(1L);
+        dto1.setCuentaId("123456");
         dto1.setTipoMovimiento(MovementType.CREDITO);
         dto1.setValor(BigDecimal.valueOf(100.00));
         dto1.setDescripcion("Test");
 
         MovementCreateDto dto2 = new MovementCreateDto();
-        dto2.setCuentaId(1L);
+        dto2.setCuentaId("123456");
         dto2.setTipoMovimiento(MovementType.CREDITO);
         dto2.setValor(BigDecimal.valueOf(100.00));
         dto2.setDescripcion("Test");
 
         MovementCreateDto dto3 = new MovementCreateDto();
-        dto3.setCuentaId(2L);
+        dto3.setCuentaId("23456");
         dto3.setTipoMovimiento(MovementType.DEBITO);
         dto3.setValor(BigDecimal.valueOf(200.00));
         dto3.setDescripcion("Different");
@@ -164,7 +164,7 @@ class MovementCreateDtoTest {
     @Test
     void testToString() {
         MovementCreateDto dto = new MovementCreateDto();
-        dto.setCuentaId(1L);
+        dto.setCuentaId("123456");
         dto.setTipoMovimiento(MovementType.CREDITO);
         dto.setValor(BigDecimal.valueOf(100.00));
         dto.setDescripcion("Test movement");
@@ -181,12 +181,12 @@ class MovementCreateDtoTest {
     @Test
     void whenTestingBothMovementTypes_thenBothAreValid() {
         MovementCreateDto creditoDto = new MovementCreateDto();
-        creditoDto.setCuentaId(1L);
+        creditoDto.setCuentaId("123456");
         creditoDto.setTipoMovimiento(MovementType.CREDITO);
         creditoDto.setValor(BigDecimal.valueOf(100.00));
 
         MovementCreateDto debitoDto = new MovementCreateDto();
-        debitoDto.setCuentaId(1L);
+        debitoDto.setCuentaId("123456");
         debitoDto.setTipoMovimiento(MovementType.DEBITO);
         debitoDto.setValor(BigDecimal.valueOf(100.00));
 

@@ -14,7 +14,6 @@ class AccountResponseDtoTest {
         AccountResponseDto dto = new AccountResponseDto();
         LocalDateTime now = LocalDateTime.now();
 
-        dto.setId(1L);
         dto.setNumeroCuenta("123456");
         dto.setTipoCuenta(AccountType.AHORRO);
         dto.setSaldoInicial(BigDecimal.valueOf(100.00));
@@ -24,7 +23,6 @@ class AccountResponseDtoTest {
         dto.setCreatedAt(now);
         dto.setUpdatedAt(now);
 
-        assertThat(dto.getId()).isEqualTo(1L);
         assertThat(dto.getNumeroCuenta()).isEqualTo("123456");
         assertThat(dto.getTipoCuenta()).isEqualTo(AccountType.AHORRO);
         assertThat(dto.getSaldoInicial()).isEqualByComparingTo(BigDecimal.valueOf(100.00));
@@ -40,13 +38,11 @@ class AccountResponseDtoTest {
         LocalDateTime now = LocalDateTime.now();
         
         AccountResponseDto dto1 = new AccountResponseDto();
-        dto1.setId(1L);
         dto1.setNumeroCuenta("123456");
         dto1.setTipoCuenta(AccountType.AHORRO);
         dto1.setCreatedAt(now);
 
         AccountResponseDto dto2 = new AccountResponseDto();
-        dto2.setId(1L);
         dto2.setNumeroCuenta("123456");
         dto2.setTipoCuenta(AccountType.AHORRO);
         dto2.setCreatedAt(now);
@@ -58,13 +54,11 @@ class AccountResponseDtoTest {
     @Test
     void testToString() {
         AccountResponseDto dto = new AccountResponseDto();
-        dto.setId(1L);
         dto.setNumeroCuenta("123456");
 
         String toString = dto.toString();
         
         assertThat(toString).contains("AccountResponseDto");
-        assertThat(toString).contains("id=1");
         assertThat(toString).contains("numeroCuenta=123456");
     }
 
@@ -72,7 +66,6 @@ class AccountResponseDtoTest {
     void whenFieldsAreNull_thenGettersReturnNull() {
         AccountResponseDto dto = new AccountResponseDto();
 
-        assertThat(dto.getId()).isNull();
         assertThat(dto.getNumeroCuenta()).isNull();
         assertThat(dto.getTipoCuenta()).isNull();
         assertThat(dto.getSaldoInicial()).isNull();
