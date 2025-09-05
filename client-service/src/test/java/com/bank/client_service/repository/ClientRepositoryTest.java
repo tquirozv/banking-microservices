@@ -41,7 +41,7 @@ class ClientRepositoryTest {
         Optional<Client> found = repository.findByPersonaIdentificacion("ID-100");
 
         assertTrue(found.isPresent());
-        assertNotNull(found.get().getClienteid());
+        assertNotNull(found.get().getClienteId());
         assertEquals("ID-100", found.get().getPersona().getIdentificacion());
         assertEquals("Alice Johnson", found.get().getPersona().getNombre());
     }

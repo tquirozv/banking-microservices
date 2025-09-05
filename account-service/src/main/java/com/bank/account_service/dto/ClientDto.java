@@ -1,4 +1,4 @@
-package com.bank.client_service.dto;
+package com.bank.account_service.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

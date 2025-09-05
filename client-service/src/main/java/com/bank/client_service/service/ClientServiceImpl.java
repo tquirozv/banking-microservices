@@ -44,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
 
         Client savedClient = clientRepository.save(client);
 
-        log.info("Client created successfully with ID: {}", savedClient.getClienteid());
+        log.info("Client created successfully with ID: {}", savedClient.getClienteId());
         return convertToDto(savedClient);
     }
 
@@ -141,7 +141,7 @@ public class ClientServiceImpl implements ClientService {
 
         Client updatedClient = clientRepository.save(existingClient);
 
-        log.info("Client updated successfully with ID: {}", updatedClient.getClienteid());
+        log.info("Client updated successfully with ID: {}", updatedClient.getClienteId());
         return convertToDto(updatedClient);
     }
 
@@ -182,7 +182,7 @@ public class ClientServiceImpl implements ClientService {
 
     private ClientDto convertToDto(Client client) {
         ClientDto dto = new ClientDto();
-        dto.setClienteid(client.getClienteid());
+        dto.setClienteId(client.getClienteId());
 
         Person person = client.getPersona();
         PersonDto personDto = new PersonDto();

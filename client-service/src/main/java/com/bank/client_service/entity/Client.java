@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class    Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long clienteid;
+    private Long clienteId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "persona_id", referencedColumnName = "identificacion", nullable = false)
@@ -36,9 +36,9 @@ public class    Client {
     public Client() {
     }
 
-    public Client(Long clienteid, Person persona, String contrasena, Boolean estado, LocalDateTime createdAt,
+    public Client(Long clienteId, Person persona, String contrasena, Boolean estado, LocalDateTime createdAt,
                   LocalDateTime updatedAt) {
-        this.clienteid = clienteid;
+        this.clienteId = clienteId;
         this.persona = (persona == null) ? null : new Person(persona);
         this.contrasena = contrasena;
         this.estado = estado;

@@ -3,13 +3,16 @@ package com.bank.account_service.service;
 import com.bank.account_service.dto.AccountCreateDto;
 import com.bank.account_service.dto.AccountResponseDto;
 import com.bank.account_service.dto.AccountUpdateDto;
+import com.bank.account_service.dto.AccountWithMovementsDto;
 import com.bank.account_service.entity.Account;
 import com.bank.account_service.exception.AccountNotFoundException;
 import com.bank.account_service.repository.AccountRepository;
+import com.bank.account_service.utils.ToDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,34 +40,34 @@ public class AccountServiceImpl implements AccountService {
         account.setClienteId(accountDto.getClienteId());
         account.setEstado(true);
 
-        return convertToDto(accountRepository.save(account));
+        return ToDto.accountConvertToDto(accountRepository.save(account));
     }
 
     @Override
     public AccountResponseDto getAccountByNumber(String accountNumber) {
         return accountRepository.findByNumeroCuenta(accountNumber)
-            .map(this::convertToDto)
+            .map(ToDto::accountConvertToDto)
             .orElseThrow(() -> new AccountNotFoundException("Account not found with number: " + accountNumber));
     }
 
     @Override
     public List<AccountResponseDto> getAccountsByClientId(Long clientId) {
         return accountRepository.findByClienteId(clientId).stream()
-            .map(this::convertToDto)
+            .map(ToDto::accountConvertToDto)
             .collect(Collectors.toList());
     }
 
     @Override
     public List<AccountResponseDto> getAllAccounts() {
         return accountRepository.findAll().stream()
-            .map(this::convertToDto)
+            .map(ToDto::accountConvertToDto)
             .collect(Collectors.toList());
     }
 
     @Override
     public List<AccountResponseDto> getAccountsByStatus(Boolean estado) {
         return accountRepository.findByEstado(estado).stream()
-            .map(this::convertToDto)
+            .map(ToDto::accountConvertToDto)
             .collect(Collectors.toList());
     }
 
@@ -75,7 +78,7 @@ public class AccountServiceImpl implements AccountService {
             .orElseThrow(() -> new AccountNotFoundException("Account not found with id: " + numeroCuenta));
         
         account.setEstado(updateDto.getEstado());
-        return convertToDto(accountRepository.save(account));
+        return ToDto.accountConvertToDto(accountRepository.save(account));
     }
 
     @Override
@@ -88,16 +91,12 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.delete(account);
     }
 
-    private AccountResponseDto convertToDto(Account account) {
-        AccountResponseDto dto = new AccountResponseDto();
-        dto.setNumeroCuenta(account.getNumeroCuenta());
-        dto.setTipoCuenta(account.getTipoCuenta());
-        dto.setSaldoInicial(account.getSaldoInicial());
-        dto.setSaldoActual(account.getSaldoActual());
-        dto.setEstado(account.getEstado());
-        dto.setClienteId(account.getClienteId());
-        dto.setCreatedAt(account.getCreatedAt());
-        dto.setUpdatedAt(account.getUpdatedAt());
-        return dto;
+    @Override
+    public List<AccountWithMovementsDto> getAccountsByClientIdAndDateRange(Long clientId, LocalDateTime startDate, 
+                                                                           LocalDateTime endDate) {
+        return accountRepository.findByClienteIdAndFechaBetween(clientId, startDate, endDate).stream()
+                .map(ToDto::accountWithMovementsConvertToDto)
+                .collect(Collectors.toList());
     }
+    
 }

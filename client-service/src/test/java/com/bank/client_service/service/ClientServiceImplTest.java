@@ -57,7 +57,7 @@ class ClientServiceImplTest {
         samplePersonEntity.setTelefono("123-456-7890");
 
         sampleClientEntity = new Client();
-        sampleClientEntity.setClienteid(10L);
+        sampleClientEntity.setClienteId(10L);
         sampleClientEntity.setPersona(samplePersonEntity);
         sampleClientEntity.setContrasena("pwd");
         sampleClientEntity.setEstado(true);
@@ -71,7 +71,7 @@ class ClientServiceImplTest {
         when(clientRepository.save(captor.capture())).thenAnswer(inv -> {
             Client toSave = captor.getValue();
             Client saved = new Client();
-            saved.setClienteid(42L);
+            saved.setClienteId(42L);
             saved.setPersona(toSave.getPersona());
             saved.setContrasena(toSave.getContrasena());
             saved.setEstado(toSave.getEstado());
@@ -83,7 +83,7 @@ class ClientServiceImplTest {
         verify(clientRepository).existsByPersonaIdentificacion("ID-123");
         verify(clientRepository).save(any(Client.class));
 
-        assertEquals(42L, result.getClienteid());
+        assertEquals(42L, result.getClienteId());
         assertNotNull(result.getPersona());
         assertEquals("ID-123", result.getPersona().getIdentificacion());
         assertEquals("John Doe", result.getPersona().getNombre());
@@ -133,7 +133,7 @@ class ClientServiceImplTest {
         ClientDto dto = service.getClientById(10L);
 
         verify(clientRepository).findById(10L);
-        assertEquals(10L, dto.getClienteid());
+        assertEquals(10L, dto.getClienteId());
         assertEquals("ID-123", dto.getPersona().getIdentificacion());
         assertNull(dto.getContrasena()); // hidden by mapping
     }
@@ -173,8 +173,8 @@ class ClientServiceImplTest {
 
         verify(clientRepository).findAll();
         assertEquals(2, result.size());
-        assertEquals(1L, result.get(0).getClienteid());
-        assertEquals(2L, result.get(1).getClienteid());
+        assertEquals(1L, result.get(0).getClienteId());
+        assertEquals(2L, result.get(1).getClienteId());
         assertNull(result.get(0).getContrasena());
         assertNull(result.get(1).getContrasena());
     }
@@ -189,7 +189,7 @@ class ClientServiceImplTest {
 
         verify(clientRepository).findByEstado(true);
         assertEquals(1, result.size());
-        assertEquals(3L, result.getFirst().getClienteid());
+        assertEquals(3L, result.getFirst().getClienteId());
         assertTrue(result.getFirst().getEstado());
     }
 
@@ -197,7 +197,7 @@ class ClientServiceImplTest {
     void updateClient_shouldUpdateSelectedFields_andIgnoreBlankPassword() {
         // Existing client with a person
         Client existing = new Client();
-        existing.setClienteid(50L);
+        existing.setClienteId(50L);
         Person existingPerson = new Person();
         existingPerson.setIdentificacion("ID-123");
         existingPerson.setNombre("Old Name");
@@ -228,7 +228,7 @@ class ClientServiceImplTest {
         verify(clientRepository).save(any(Client.class));
 
         // Expect selective updates applied
-        assertEquals(50L, result.getClienteid());
+        assertEquals(50L, result.getClienteId());
         assertEquals("New Name", result.getPersona().getNombre());
         assertEquals(31, result.getPersona().getEdad());
         assertEquals("111-111-1111", result.getPersona().getTelefono());
@@ -243,7 +243,7 @@ class ClientServiceImplTest {
     @Test
     void updateClient_whenExistingHasNullPerson_shouldCreateAndPopulatePerson() {
         Client existing = new Client();
-        existing.setClienteid(77L);
+        existing.setClienteId(77L);
         existing.setPersona(null);
         existing.setContrasena("oldpwd");
         existing.setEstado(false);
@@ -267,7 +267,7 @@ class ClientServiceImplTest {
         verify(clientRepository).findById(77L);
         verify(clientRepository).save(any(Client.class));
 
-        assertEquals(77L, result.getClienteid());
+        assertEquals(77L, result.getClienteId());
         assertEquals("NEW-ID", result.getPersona().getIdentificacion());
         assertEquals("Jane", result.getPersona().getNombre());
         assertEquals("F", result.getPersona().getGenero());
@@ -316,7 +316,7 @@ class ClientServiceImplTest {
             p.setTelefono(bp.getTelefono());
         }
         Client c = new Client();
-        c.setClienteid(id);
+        c.setClienteId(id);
         c.setPersona(p);
         c.setContrasena(base.getContrasena());
         c.setEstado(base.getEstado());

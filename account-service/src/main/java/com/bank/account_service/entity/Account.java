@@ -43,8 +43,8 @@ public class Account {
     @Column(name = "cliente_id", nullable = false)
     private Long clienteId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cuenta_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "numero_cuenta")
     private List<Movement> movimientos = new ArrayList<>();
 
     @CreationTimestamp

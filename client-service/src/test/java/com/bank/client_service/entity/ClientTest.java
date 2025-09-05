@@ -57,7 +57,7 @@ class ClientTest {
         assertNotEquals("0000000000", fromGetter3.getTelefono(), "Internal state must be isolated from getter copies");
 
         // Other fields should be set as provided
-        assertEquals(1L, client.getClienteid());
+        assertEquals(1L, client.getClienteId());
         assertEquals("secret", client.getContrasena());
         assertEquals(false, client.getEstado());
     }

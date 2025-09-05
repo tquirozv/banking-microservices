@@ -8,6 +8,7 @@ import com.bank.account_service.exception.AccountNotFoundException;
 import com.bank.account_service.exception.MovementNotFoundException;
 import com.bank.account_service.repository.AccountRepository;
 import com.bank.account_service.repository.MovementRepository;
+import com.bank.account_service.utils.ToDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,20 +66,20 @@ public class MovementServiceImpl implements MovementService {
         movement.setSaldo(newBalance);
         Movement savedMovement = movementRepository.save(movement);
 
-        return convertToDto(savedMovement);
+        return ToDto.movementConvertToDto(savedMovement);
     }
 
     @Override
     public MovementResponseDto getMovementById(Long id) {
         return movementRepository.findById(id)
-                .map(this::convertToDto)
+                .map(ToDto::movementConvertToDto)
                 .orElseThrow(() -> new MovementNotFoundException("Movement not found"));
     }
 
     @Override
     public List<MovementResponseDto> getMovementsByAccountId(String accountId) {
         return movementRepository.findByNumeroCuenta(accountId).stream()
-                .map(this::convertToDto)
+                .map(ToDto::movementConvertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -86,7 +87,7 @@ public class MovementServiceImpl implements MovementService {
     public List<MovementResponseDto> getMovementsByAccountIdAndDateRange(
             String accountId, LocalDateTime startDate, LocalDateTime endDate) {
         return movementRepository.findByNumeroCuentaAndFechaBetween(accountId, startDate, endDate).stream()
-                .map(this::convertToDto)
+                .map(ToDto::movementConvertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -94,7 +95,7 @@ public class MovementServiceImpl implements MovementService {
     public List<MovementResponseDto> getMovementsByAccountIdAndType(
             String accountId, Movement.MovementType movementType) {
         return movementRepository.findByNumeroCuentaAndTipoMovimiento(accountId, movementType).stream()
-                .map(this::convertToDto)
+                .map(ToDto::movementConvertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -118,16 +119,4 @@ public class MovementServiceImpl implements MovementService {
         movementRepository.delete(movement);
     }
 
-    private MovementResponseDto convertToDto(Movement movement) {
-        MovementResponseDto dto = new MovementResponseDto();
-        dto.setId(movement.getId());
-        dto.setCuentaId(movement.getNumeroCuenta());
-        dto.setFecha(movement.getFecha());
-        dto.setTipoMovimiento(movement.getTipoMovimiento());
-        dto.setValor(movement.getValor());
-        dto.setSaldo(movement.getSaldo());
-        dto.setDescripcion(movement.getDescripcion());
-        dto.setCreatedAt(movement.getCreatedAt());
-        return dto;
-    }
 }

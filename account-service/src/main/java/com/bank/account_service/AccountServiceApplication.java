@@ -17,7 +17,7 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.TimeZone;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.bank.account_service")
 public class AccountServiceApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(AccountServiceApplication.class);
